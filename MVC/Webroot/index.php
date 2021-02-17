@@ -1,5 +1,4 @@
 <?php
-use MVC\Dispatcher;
 
 define('WEBROOT', str_replace("Webroot/index.php", "", $_SERVER["SCRIPT_NAME"]));
 define('ROOT', str_replace("Webroot/index.php", "", $_SERVER["SCRIPT_FILENAME"]));
@@ -7,6 +6,10 @@ define('ROOT', str_replace("Webroot/index.php", "", $_SERVER["SCRIPT_FILENAME"])
 // require(ROOT . 'vendor/autoload.php');
 require_once realpath("../vendor/autoload.php");
 
+use MVC\Dispatcher;
+use MVC\Request;
+use MVC\Router;
+use MVC\Config\Core;
 // require(ROOT . 'Config/core.php');
 
 // require(ROOT . 'router.php');

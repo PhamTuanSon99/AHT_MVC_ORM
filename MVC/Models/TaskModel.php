@@ -32,7 +32,7 @@ class TaskModel extends Model
 
     public function setTitle($title)
     {
-        $this->title = $title
+        $this->title = $title;
     }
     
     //Description
@@ -52,9 +52,19 @@ class TaskModel extends Model
         return $this->created_at;
     }
 
+    public function setCreatedAt($created_at)
+    {
+        $this->created_at = $created_at;
+    }
+
     //Updated_at
     public function getUpdatedAt()
     {
         return $this->updated_at;
+    }
+
+    public function setUpdatedAt($updated_at)
+    {
+        $this->updated_at = $updated_at;
     }
 }

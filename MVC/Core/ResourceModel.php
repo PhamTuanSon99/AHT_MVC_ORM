@@ -3,9 +3,8 @@
 namespace MVC\Core;
 
 use MVC\Core\ResourceModelInterface;
-use MVC\Core\TaskModel;
+use MVC\Models\TaskModel;
 use MVC\Config\Database;
-
 use PDO;
 
 class ResourceModel implements ResourceModelInterface
@@ -27,15 +26,15 @@ class ResourceModel implements ResourceModelInterface
         $update_attributes = array(); //attribute's query for update model
         $addValue = array();    //attribute's value
 
-        if($model->getID() == null){
+        if($model->getId() == null){
             //If id == null, create new model
 
-            foreach($arr_atr as $value => index) {
-                if($value == "id")  continue;
-                array_push($attributes, $value);
+            foreach ($arr_atr as $value => $index) {
+                if($value == null)  continue;
+                $add_attributes[] = $value;
                 array_push($addValue, ':' . $value);
             }
-    
+            
             //convert array to string
             $str_atr = implode(', ', $add_attributes);
             $str_value = implode(', ', $addValue);
@@ -45,7 +44,7 @@ class ResourceModel implements ResourceModelInterface
             $sql .= " (".$str_atr.")";
             $sql .= " VALUES(" . $str_value . ")";
 
-            $req = Database::getBdd->prepare($sql);
+            $req = Database::getBdd()->prepare($sql);
 
             return $req->execute($arr_atr);
         } else {
@@ -53,8 +52,8 @@ class ResourceModel implements ResourceModelInterface
             //Get ID
             $id = $model->getId();
 
-            foreach($arr_atr as $value => index) {
-                if($value == "id")   continue;
+            foreach ($arr_atr as $value => $index) {
+                if($value == null)   continue;
                 array_push($update_attributes, $value . " = :" . $value);
             }
 
@@ -63,22 +62,24 @@ class ResourceModel implements ResourceModelInterface
             //query
             $sql = "UPDATE $this->table SET " . $str_update_atr;
             $sql .= " WHERE id = " . $id;
+
+            $req = Database::getBdd()->prepare($sql);
+            return $req->execute($arr_atr);
         }
     }
 
-    public function delete($model)
+    public function delete($id)
     {
-        $id = $model->getID();
         $sql = "DELETE FROM $this->table";
         $sql .= " WHERE id = ?";
-        $req = Database::getBdd->prepare($sql);
+        $req = Database::getBdd()->prepare($sql);
         return $req->execute([$id]);
     }
 
     public function getList()
     {
         $sql = "SELECT * FROM $this->table";
-        $req = Database::getBdd->prepare($sql);
+        $req = Database::getBdd()->prepare($sql);
         $req->execute();
         return $req->fetchAll(PDO::FETCH_OBJ);
     }
@@ -87,7 +88,8 @@ class ResourceModel implements ResourceModelInterface
     {
         $sql = "SELECT * FROM $this->table";
         $sql .= " WHERE id = ?";
-        $req = Database::getBdd->prepare($sql);
-        return $req->execute([$id]);
+        $req = Database::getBdd()->prepare($sql);
+        $req->execute([$id]);
+        return $req->fetch();
     }
 }                                                               
