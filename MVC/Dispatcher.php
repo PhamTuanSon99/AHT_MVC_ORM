@@ -28,7 +28,7 @@ class Dispatcher
         // require($file);
         $file = 'MVC\\Controllers\\' . $name;
         
-        $controller = new $file();
+        $controller = new $file;
         return $controller;
     }
 

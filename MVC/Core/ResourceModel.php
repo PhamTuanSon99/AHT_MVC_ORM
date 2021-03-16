@@ -46,6 +46,7 @@ class ResourceModel implements ResourceModelInterface
 
             $req = Database::getBdd()->prepare($sql);
 
+            // var_dump($arr_atr);die();
             return $req->execute($arr_atr);
         } else {
             //If id != null, update model

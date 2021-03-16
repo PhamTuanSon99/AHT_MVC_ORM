@@ -13,5 +13,5 @@ class TaskResourceModel extends ResourceModel
     }
 }
 
-new TaskResourceModel();
+// new TaskResourceModel();
     

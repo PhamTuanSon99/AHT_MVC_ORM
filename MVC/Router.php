@@ -11,7 +11,7 @@ class Router
 
         if ($url == "/MVC/")
         {
-            $request->controller = "tasks";
+            $request->controller = "test";
             $request->action = "index";
             $request->params = [];
         }
@@ -23,7 +23,6 @@ class Router
             $request->action = $explode_url[1];
             $request->params = array_slice($explode_url, 2);
         }
-
     }
 }
 ?>
